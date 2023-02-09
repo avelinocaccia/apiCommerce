@@ -4,9 +4,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model{
-    protected $table = "services";
+    
 
-    // protected $fillable = [];
-
-    // public $timestamps = false;
+     
+    public function clients(){
+        return $this->belongsToMany(Client::class);
+    }
 }

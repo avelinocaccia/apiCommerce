@@ -16,3 +16,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+$router->post('clientes/crear','ClientController@store');
+$router->get('/clientes/ver','ClientController@index');
