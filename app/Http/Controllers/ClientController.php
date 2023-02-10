@@ -16,6 +16,7 @@ class ClientController extends Controller
     public function store(Request $request){
         $datoCliente = new Client;
         $datoCliente->name = $request->input('name');
+        //$datoCliente->name = $request->name; otra forma de insertar los datos por request
         $datoCliente->email = $request->input('email');
         $datoCliente->phone = $request->input('phone');
         $datoCliente->address = $request->input('address');
@@ -30,6 +31,24 @@ class ClientController extends Controller
         
     }
 
+    public function show(Client $client){
+        return response()->json($client);
+    
+    }
+
+    public function update(Request $request, Client $client){
+        
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+        $client->address = $request->address;
+        $client->save();
+        $data = [
+            'message' => 'cliente actualizado correctamente',
+            'client' => $client    
+        ];
+        return response()->json($data);
+    }
 
 
 
