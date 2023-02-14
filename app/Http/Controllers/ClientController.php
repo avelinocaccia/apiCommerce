@@ -50,7 +50,7 @@ class ClientController extends Controller
                 ];
         
     
-        return response()->json($data, 200);
+        return response()->json($data, 204);
    
     }
   
