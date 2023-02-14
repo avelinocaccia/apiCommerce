@@ -18,8 +18,27 @@ $router->get('/', function () use ($router) {
 });
 
 
-$router->post('clientes/crear','ClientController@store');
-$router->get('/clientes/ver','ClientController@index');
-$router->get('/clientes/{id}','ClientController@show');
-$router->put('/clientes/{id}','ClientController@update');
-$router->delete('/clientes/{id}','ClientController@destroy');
+$router->group(['prefix' => 'api/clientes'], function () use ($router){
+
+    $router->post('crear','ClientController@store');
+    $router->post('/services','ClientController@attach');
+    $router->post('/services/dettach','ClientController@dettach');
+    $router->get('ver','ClientController@index');
+    $router->get('{id}','ClientController@show');
+    $router->put('{id}','ClientController@update');
+    $router->delete('{id}','ClientController@destroy');
+
+});
+
+
+$router->group(['prefix' => 'api/servicios'], function () use ($router){
+
+    $router->post('crear','ServiceController@store');
+    $router->get('ver','ServiceController@index');
+    $router->get('/filtrar/{query}','ServiceController@getQueryByName');
+    $router->get('{id}','ServiceController@show');
+    $router->put('{id}','ServiceController@update');
+    $router->delete('{id}','ServiceController@destroy');
+
+});
+

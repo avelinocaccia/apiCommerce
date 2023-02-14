@@ -9,8 +9,20 @@ class ClientController extends Controller
 {
     public function index(){
     
-        $clients = Client::all();
-        return response()->json($clients);
+        $clients = Client::get();
+        $array = [];
+        foreach ($clients as $client){
+            $servicesASC = $client->services()->orderBy('id','asc')->get();
+            $array[] = [
+                'id' => $client->id,
+                'name' => $client->name,
+                'email' => $client->email,
+                'phone' => $client->phone,
+                'address' => $client->address,
+                'services' => $servicesASC
+            ];
+        }
+        return response()->json($array);
     }
 
     public function store(Request $request){
@@ -42,7 +54,7 @@ class ClientController extends Controller
         $clientes->email = $request->email;
         $clientes->phone = $request->phone;
         $clientes->address = $request->address;
-        $clientes->save();
+       
 
         $clientes->save();
         $data = [ 'message' => 'actualizado con éxito',
@@ -55,12 +67,6 @@ class ClientController extends Controller
     }
   
 
-
-
-        
-  
-
-
     public function destroy(Request $request, $id){
         $client = Client::find($id);
         $client->delete();
@@ -72,6 +78,35 @@ class ClientController extends Controller
 
         return response()->json($data, 410);
     }
+
+
+    public function attach(Request $request){
+        $client = Client::find($request->client_id);
+        $client->services()->attach($request->service_id);
+        $data = [
+            'message' => 'service attached successfully',
+            'client' => $client    
+        ];
+
+
+        return response()->json($data);
+    }
+
+
+    public function dettach(Request $request){
+        $client = Client::find($request->client_id);
+        $client->services()->detach($request->service_id);
+        $data = [
+            'message' => 'service dettached successfully',
+            'client' => $client,
+            'servicio eliminado' => $client->services   
+        ];
+
+
+        return response()->json($data);
+    }
+
+
 
 
 }
