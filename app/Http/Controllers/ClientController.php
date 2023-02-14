@@ -31,24 +31,34 @@ class ClientController extends Controller
         
     }
 
-    public function show(Client $client){
-        return response()->json($client);
+    public function show($id) {
+    $client = Client::find($id);
+    return response()->json($client, 200);
+    }
     
-    }
+    public function update(Request $request, $id){
+        $clientes = Client::find($id);
+        $clientes->name = $request->name;
+        $clientes->email = $request->email;
+        $clientes->phone = $request->phone;
+        $clientes->address = $request->address;
+        $clientes->save();
 
-    public function update(Request $request, Client $client){
+        $clientes->save();
+        $data = [ 'message' => 'actualizado con éxito',
+                  'client' => $clientes ,
+                ];
         
-        $client->name = $request->name;
-        $client->email = $request->email;
-        $client->phone = $request->phone;
-        $client->address = $request->address;
-        $client->save();
-        $data = [
-            'message' => 'cliente actualizado correctamente',
-            'client' => $client    
-        ];
-        return response()->json($data);
+    
+        return response()->json($data, 200);
+   
     }
+  
+
+
+
+        
+  
 
 
     public function destroy(Client $client){

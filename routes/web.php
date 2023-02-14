@@ -20,4 +20,5 @@ $router->get('/', function () use ($router) {
 
 $router->post('clientes/crear','ClientController@store');
 $router->get('/clientes/ver','ClientController@index');
-$router->get('/clientes','ClientController@show');
+$router->get('/clientes/{id}','ClientController@show');
+$router->put('/clientes/{id}','ClientController@update');
