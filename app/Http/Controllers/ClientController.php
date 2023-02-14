@@ -61,12 +61,16 @@ class ClientController extends Controller
   
 
 
-    public function destroy(Client $client){
+    public function destroy(Request $request, $id){
+        $client = Client::find($id);
         $client->delete();
         $data = [
             'message' => 'cliente eliminado',
             'client' => $client    
         ];
+
+
+        return response()->json($data, 410);
     }
 
 
