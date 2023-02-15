@@ -70,4 +70,20 @@ class ServiceController extends Controller{
             return response()->json($data, 410);
         }
 
+
+
+        public function clients(Request $request){
+       
+            $service = Service::find($request->service_id);
+            $clients = $service->clients;
+            $data = [
+                'message' => 'Clients fetched succsessfully',
+                'clients' => $clients    
+            ];
+    
+    
+            return response()->json($data, 200);
+       
+        }
+
 }

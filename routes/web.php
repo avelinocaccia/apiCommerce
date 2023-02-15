@@ -33,6 +33,9 @@ $router->group(['prefix' => 'api/clientes'], function () use ($router){
 
 $router->group(['prefix' => 'api/servicios'], function () use ($router){
 
+    $router->post('clients', 'ServiceController@clients');
+
+    
     $router->post('crear','ServiceController@store');
     $router->get('ver','ServiceController@index');
     $router->get('/filtrar/{query}','ServiceController@getQueryByName');
